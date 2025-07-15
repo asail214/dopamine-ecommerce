@@ -9,6 +9,8 @@ class CategoriesSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->command->info('🏷️ Creating sample categories...');
+
         $categories = [
             [
                 'name' => 'Electronics',
@@ -16,13 +18,13 @@ class CategoriesSeeder extends Seeder
                 'order' => 1,
             ],
             [
-                'name' => 'Clothing',
-                'slug' => 'clothing', 
+                'name' => 'Clothing & Fashion',
+                'slug' => 'clothing-fashion',
                 'order' => 2,
             ],
             [
-                'name' => 'Books',
-                'slug' => 'books',
+                'name' => 'Books & Media',
+                'slug' => 'books-media',
                 'order' => 3,
             ],
             [
@@ -31,9 +33,14 @@ class CategoriesSeeder extends Seeder
                 'order' => 4,
             ],
             [
-                'name' => 'Sports',
-                'slug' => 'sports',
+                'name' => 'Sports & Outdoors',
+                'slug' => 'sports-outdoors',
                 'order' => 5,
+            ],
+            [
+                'name' => 'Health & Beauty',
+                'slug' => 'health-beauty',
+                'order' => 6,
             ],
         ];
 
@@ -43,5 +50,7 @@ class CategoriesSeeder extends Seeder
                 $categoryData
             );
         }
+
+        $this->command->info('✅ Created ' . count($categories) . ' categories');
     }
 }

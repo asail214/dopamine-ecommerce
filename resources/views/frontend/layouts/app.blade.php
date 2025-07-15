@@ -7,6 +7,28 @@
 
     <title>{{ config('app.name', 'Dopamine Store') }} - @yield('title', 'E-commerce Platform')</title>
 
+    <!-- Favicon - Multiple Sizes from your favicon folder -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon/web-app-manifest-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon/web-app-manifest-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/favicon/web-app-manifest-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('images/favicon/web-app-manifest-512x512.png') }}">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="{{ asset('images/favicon/apple-touch-icon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon/apple-touch-icon.png') }}">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ asset('images/favicon/site.webmanifest') }}">
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#1e40af">
+    <meta name="msapplication-TileImage" content="{{ asset('images/favicon/web-app-manifest-192x192.png') }}">
+    
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#1e40af">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

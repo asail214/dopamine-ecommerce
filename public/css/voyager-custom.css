@@ -1,0 +1,61 @@
+ 
+/* Dopamine Store - Voyager Blue Theme */
+:root {
+    --primary-blue: #1e40af;
+    --secondary-blue: #3b82f6;
+    --light-blue: #60a5fa;
+    --white: #ffffff;
+    --gray-light: #f8fafc;
+    --gray-medium: #64748b;
+}
+
+/* Override Voyager's primary color */
+.app-container .navbar-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;
+}
+
+.app-container .navbar-header .navbar-brand {
+    color: var(--white) !important;
+}
+
+/* Sidebar styling */
+.app-container .side-menu {
+    background: var(--primary-blue) !important;
+}
+
+.app-container .side-menu .navbar-nav > li > a {
+    color: var(--white) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-container .side-menu .navbar-nav > li > a:hover,
+.app-container .side-menu .navbar-nav > li.active > a {
+    background: var(--secondary-blue) !important;
+    color: var(--white) !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--primary-blue) !important;
+    border-color: var(--primary-blue) !important;
+}
+
+.btn-primary:hover {
+    background: var(--secondary-blue) !important;
+    border-color: var(--secondary-blue) !important;
+}
+
+/* Cards and panels */
+.panel-primary > .panel-heading {
+    background: var(--light-blue) !important;
+    border-color: var(--primary-blue) !important;
+}
+
+/* Links */
+a {
+    color: var(--primary-blue) !important;
+}
+
+a:hover {
+    color: var(--secondary-blue) !important;
+}

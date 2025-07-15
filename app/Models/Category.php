@@ -3,23 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
-class Category extends Model implements TranslatableContract
+class Category extends Model
 {
-    use HasRecursiveRelationships, Translatable;
+    use HasRecursiveRelationships;
 
-    // FIXED: Added missing translatable attributes
-    public $translatedAttributes = ['name', 'description', 'meta_title', 'meta_description'];
+    // Temporarily disable translations until we create the translation table
+    // use Translatable;
+    // public $translatedAttributes = ['name', 'description', 'meta_title', 'meta_description'];
     
     protected $fillable = [
+        'name',           // Move name to main table temporarily
+        'description',    // Move description to main table temporarily
         'slug', 
         'parent_id', 
-        'sort_order', // FIXED: Was 'order' in migration but 'sort_order' in model
+        'sort_order',
         'is_active',
-        'image'
+        'image',
+        'meta_title',
+        'meta_description'
     ];
 
     protected $casts = [
@@ -27,7 +30,6 @@ class Category extends Model implements TranslatableContract
         'sort_order' => 'integer',
     ];
 
-    // FIXED: Correct method name for adjacency list
     public function getParentKeyName()
     {
         return 'parent_id';
@@ -38,7 +40,6 @@ class Category extends Model implements TranslatableContract
         return $this->belongsToMany(Product::class, 'category_product');
     }
 
-    // Helper methods for SRS requirements
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id')->where('is_active', true);
@@ -54,13 +55,11 @@ class Category extends Model implements TranslatableContract
         return $this->children()->count() > 0;
     }
 
-    // Scope for active categories
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
     }
 
-    // Get category tree for admin dropdown
     public static function getTree()
     {
         return self::active()->whereNull('parent_id')->with('children')->orderBy('sort_order')->get();

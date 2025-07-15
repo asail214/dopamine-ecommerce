@@ -59,17 +59,34 @@
         .bg-primary {
             background-color: var(--primary-blue) !important;
         }
+
+        /* Add some hover animation to the hero logo */
+        .logo-hero-container img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo-hero-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Responsive logo sizing */
+        @media (max-width: 768px) {
+            .logo-hero-container img {
+                width: 200px !important;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom border-primary border-opacity-25">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom border-primary border-opacity-25">
         <div class="container">
-            <!-- Logo -->
+            <!-- Logo with your actual image -->
             <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                <span class="material-icons me-2 text-primary">shopping_bag</span>
-                <span>Dopamine Store</span>
+                <img src="{{ asset('images/dopamine-logo.png') }}" alt="Dopamine Store" 
+                     style="height: 50px; width: auto; margin-right: 10px;">
+                <span class="fw-bold text-primary d-none d-md-inline">Dopamine Store</span>
             </a>
 
             <!-- Mobile Toggle -->

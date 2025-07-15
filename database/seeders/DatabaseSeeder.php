@@ -11,34 +11,37 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. First: Install Voyager (users, roles, permissions, menus)
+        $this->command->info('🚀 Starting database seeding...');
+
+        // 1. Install Voyager core tables (users, roles, permissions, etc.)
         $this->call([
-            VoyagerDatabaseSeeder::class,
+            DataTypesTableSeeder::class,
+            DataRowsTableSeeder::class,
+            MenusTableSeeder::class,
+            MenuItemsTableSeeder::class,
+            RolesTableSeeder::class,
+            PermissionsTableSeeder::class,
+            PermissionRoleTableSeeder::class,
+            SettingsTableSeeder::class,
+            UsersTableSeeder::class,  // Create admin user
         ]);
 
-        // 2. Second: Create categories (no dependencies)
+        // 2. Set up Categories (BREAD + data)
         $this->call([
-            CategoriesTableSeeder::class,
+            CategoriesTableSeeder::class,  // Creates BREAD structure for categories
+            CategoriesSeeder::class,       // Adds sample categories
         ]);
 
-        // 3. Third: Create sample categories data
+        // 3. Set up Products (BREAD + data)
         $this->call([
-            CategoriesSeeder::class,
+            ProductsBreadSeeder::class,    // Creates BREAD structure for products
+            ProductsSeeder::class,         // Adds sample products
         ]);
 
-        // 4. Fourth: Set up Products BREAD in Voyager
+        // 4. Add other content
         $this->call([
-            ProductsBreadSeeder::class,
-        ]);
-
-        // 5. Fifth: Create products (depends on categories)
-        $this->call([
-            ProductsSeeder::class,
-        ]);
-
-        // 6. Finally: Create dummy content (posts, pages, etc.)
-        $this->call([
-            VoyagerDummyDatabaseSeeder::class,
+            PostsTableSeeder::class,       // Blog posts
+            PagesTableSeeder::class,       // Static pages
         ]);
 
         $this->command->info('🎉 Database seeded successfully!');
@@ -46,5 +49,6 @@ class DatabaseSeeder extends Seeder
         $this->command->info('   Email: admin@admin.com');
         $this->command->info('   Password: password');
         $this->command->info('🌐 Visit /admin to access Voyager panel');
+        $this->command->info('🏠 Visit / to see your website');
     }
 }

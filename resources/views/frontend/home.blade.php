@@ -17,15 +17,18 @@
             </div>
             <div class="col-lg-6 text-center">
                 <div class="position-relative">
-                    <span class="material-icons" style="font-size: 200px; opacity: 0.3;">shopping_bag</span>
-                    <div class="position-absolute top-50 start-50 translate-middle">
-                        <span class="material-icons text-warning" style="font-size: 60px;">star</span>
+                    <!-- Replace generic icon with your actual logo -->
+                    <div class="logo-hero-container" style="position: relative; display: inline-block;">
+                        <img src="{{ asset('images/dopamine-logo.png') }}" alt="Dopamine Store" 
+                             style="width: 300px; height: auto; filter: brightness(1.2) drop-shadow(0 10px 30px rgba(255,255,255,0.3));">
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 
 <!-- Features Section -->
 <section class="py-5 bg-white">

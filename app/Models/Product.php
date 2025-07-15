@@ -4,36 +4,43 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
+// Temporarily disable translations
+// use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+// use Astrotomic\Translatable\Translatable;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class Product extends Model implements TranslatableContract
+class Product extends Model // Remove TranslatableContract for now
 {
-    use HasFactory, Translatable, Sluggable;
+    use HasFactory, Sluggable; // Remove Translatable for now
 
-    // These fields will be translated (stored in product_translations table)
-    public $translatedAttributes = ['name', 'description', 'short_description', 'meta_title', 'meta_description', 'meta_keywords'];
+    // Temporarily disable translations
+    // public $translatedAttributes = ['name', 'description', 'short_description', 'meta_title', 'meta_description', 'meta_keywords'];
     
-    // These fields are stored in the main products table
+    // Store all fields directly in the main products table
     protected $fillable = [
+        'name',           // Move to main table
+        'description',    // Move to main table
+        'short_description',
         'sku', 
         'slug', 
         'price', 
-        'compare_price', // ADDED: For original price when on sale
-        'cost_price', // ADDED: For profit calculations
+        'compare_price',
+        'cost_price',
         'stock_quantity', 
-        'min_stock_level', // ADDED: For low stock alerts
-        'weight', // ADDED: For shipping calculations
-        'dimensions', // ADDED: For shipping
-        'status', // CHANGED: from 'active' to 'status' for better enum support
-        'featured', // ADDED: For featured products
-        'digital', // ADDED: For digital products
-        'requires_shipping', // ADDED
-        'taxable', // ADDED
-        'track_quantity', // ADDED
-        'created_by', // ADDED: Admin who created
-        'published_at' // ADDED: For scheduled publishing
+        'min_stock_level',
+        'weight',
+        'dimensions',
+        'status',
+        'featured',
+        'digital',
+        'requires_shipping',
+        'taxable',
+        'track_quantity',
+        'created_by',
+        'published_at',
+        'meta_title',
+        'meta_description',
+        'meta_keywords'
     ];
 
     protected $casts = [
@@ -50,7 +57,7 @@ class Product extends Model implements TranslatableContract
         'published_at' => 'datetime',
     ];
 
-    // Status constants as per SRS
+    // Status constants
     const STATUS_DRAFT = 'draft';
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
@@ -121,12 +128,15 @@ class Product extends Model implements TranslatableContract
     }
 
     /**
-     * Scopes as per SRS requirements
+     * Scopes
      */
     public function scopeActive($query)
     {
         return $query->where('status', self::STATUS_ACTIVE)
-                    ->where('published_at', '<=', now());
+                    ->where(function($q) {
+                        $q->where('published_at', '<=', now())
+                          ->orWhereNull('published_at');
+                    });
     }
 
     public function scopeInStock($query)
@@ -154,7 +164,7 @@ class Product extends Model implements TranslatableContract
     }
 
     /**
-     * Attribute methods for SRS requirements
+     * Attribute methods
      */
     public function getIsInStockAttribute()
     {
@@ -169,7 +179,7 @@ class Product extends Model implements TranslatableContract
         if (!$this->track_quantity) {
             return false;
         }
-        return $this->stock_quantity <= $this->min_stock_level;
+        return $this->stock_quantity <= ($this->min_stock_level ?? 0);
     }
 
     public function getDiscountPercentageAttribute()
@@ -196,7 +206,7 @@ class Product extends Model implements TranslatableContract
     }
 
     /**
-     * Business methods for SRS requirements
+     * Business methods
      */
     public function decrementStock($quantity)
     {

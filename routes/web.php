@@ -3,8 +3,10 @@
 // Replace the content in routes/web.php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +38,8 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 // Dashboard (redirect based on role)
 Route::get('/dashboard', function () {
-    if (auth()->user()->hasRole('admin')) {
+    $user = auth()->user();
+    if ($user && $user->role === 'admin') {
         return redirect('/admin');
     }
     return view('dashboard');
